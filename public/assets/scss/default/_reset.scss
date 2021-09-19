@@ -495,3 +495,11 @@ input[type="checkbox"]:checked + label::before {
   max-width: 768px !important;
   border-radius: 8px;
 }
+
+.ReactModal__Overlay--after-open {
+  z-index: 9999 !important;
+}
+
+.text-shutter-box {
+  color: var(--color-primary);
+}
