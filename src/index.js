@@ -75,6 +75,8 @@ import configureStore from './redux/store';
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from '@fortawesome/free-brands-svg-icons';
+import CreatePost from './home/screens/news/CreatePost';
+import PostDetails from './home/screens/news/PostDetails';
 
 library.add(fab);
 
@@ -109,6 +111,7 @@ class Root extends Component{
                         <Route exact path={`${process.env.PUBLIC_URL}/order-brief`} component={OrderBrief}/>
                         <Route exact path={`${process.env.PUBLIC_URL}/galleries`} component={Galleries}/>
                         <Route exact path={`${process.env.PUBLIC_URL}/news`} component={News}/>
+                        <Route exact path={`${process.env.PUBLIC_URL}/news/create`} component={CreatePost}/>
                         <Route exact path={`${process.env.PUBLIC_URL}/products`} component={Products}/>
                         <Route exact path={`${process.env.PUBLIC_URL}/register`} component={Register}/>
                         <Route exact path={`${process.env.PUBLIC_URL}/login`} component={Login}/>
@@ -116,7 +119,8 @@ class Root extends Component{
                         <Route exact path={`${process.env.PUBLIC_URL}/service-details`} component={ServiceDetails}/>
                         <Route exact path={`${process.env.PUBLIC_URL}/contact`} component={Contact}/>
                         <Route exact path={`${process.env.PUBLIC_URL}/about`} component={About}/>
-                        <Route exact path={`${process.env.PUBLIC_URL}/news/:id`} component={PortfolioDetails}/>
+                        {/* <Route exact path={`${process.env.PUBLIC_URL}/news/:id`} component={PortfolioDetails}/> */}
+                        <Route exact path={`${process.env.PUBLIC_URL}/news/:id`} component={PostDetails}/>
                         <Route exact path={`${process.env.PUBLIC_URL}/blog`} component={Blog}/>
                         <Route exact path={`${process.env.PUBLIC_URL}/blog-details`} component={BlogDetails}/>
 

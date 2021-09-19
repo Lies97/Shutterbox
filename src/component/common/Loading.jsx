@@ -9,7 +9,7 @@ class Loading extends Component {
     const { className = '' } = this.props;
     return (
       <div className={`d-flex justify-content-center ${className}`}>
-        <div className="spinner-border text-primary" role="status">
+        <div className="spinner-border text-shutter-box" role="status">
           <span className="sr-only">Loading...</span>
         </div>
       </div>

@@ -15,30 +15,32 @@ import 'react-toastify/dist/ReactToastify.css';
 import utils from '../../../helper';
 import './style.scss';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { login } from '../../../redux/actions/auth/login';
+import _ from 'lodash';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      username: '',
-      password: '',
       passwordType: 'password',
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { loginData: nextLoginData, loginError: nextLoginError } = nextProps;
+    const { loginData, loginError, history } = this.props;
+
+    if (!_.isEmpty(nextLoginData) && loginData !== nextLoginData) {
+      utils.setSessionStorage('user', JSON.stringify(nextLoginData));
+      history.push('/order-brief');
+    } else if (nextLoginError && loginError !== nextLoginError) {
+      this.handleAlert(nextLoginError);
+    }
+  }
+
   handleSubmit = (values) => {
-    const url = `${utils.apiUrl}/auth/signin`;
-    axios
-      .post(url, values)
-      .then((res) => {
-        if (res.data) {
-          utils.setSessionStorage('user', JSON.stringify(res.data));
-        }
-      })
-      .catch((err) => {
-        this.handleAlert(err.response.data.message);
-      });
+    this.props.login(values);
   };
 
   handleAlert = (content, isError = true) => {
@@ -69,10 +71,14 @@ class Login extends Component {
         {/* Start Page Wrapper  */}
         <main className="page-wrapper">
           {/* Start Portfolio Area  */}
-          <div className="creative-portfolio-wrapper ptb--120 register-container">
-            {/* {isLoading && <Loading />} */}
-            <div className="container p--35 bg-white screen-sm">
+          <div
+            className={`creative-portfolio-wrapper ptb--120 register-container ${
+              isLoading ? 'disabled' : ''
+            }`}
+          >
+            <div className="container p--35 bg-white screen-sm position-relative">
               <div className="form-container">
+                {isLoading && <Loading className="center-loading" />}
                 <div className="title text-center">
                   <h3 className="active">Login Form</h3>
                 </div>
@@ -157,10 +163,24 @@ class Login extends Component {
           style={{ width: '400px' }}
         />
 
-        <Footer isLoading={isLoading} />
+        <Footer isLoading={false} />
       </div>
     );
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.authReducer.isLoading,
+    loginData: state.authReducer.loginData,
+    loginError: state.authReducer.loginError,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (values) => dispatch(login(values)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -11,11 +11,13 @@ import { SignupSchema } from '../../../component/common/SignupSchema';
 import { Formik, Form, Field } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import utils from '../../../helper';
-
+import { register } from '../../../redux/actions/auth/register';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './style.scss';
 import axios from 'axios';
+import { connect } from 'react-redux';
+
 
 class Register extends Component {
   constructor(props) {
@@ -26,7 +28,19 @@ class Register extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { registerData: nextRegisterData, registerError: nextRegisterError } = nextProps;
+    const { registerData, registerError } = this.props;
+
+    if (nextRegisterData && registerData !== nextRegisterData) {
+      this.handleAlert('Register successfully!', false);
+    } else if (nextRegisterError && registerData !== registerError) {
+      this.handleAlert(nextRegisterError);
+    }
+  }
+
   handleSubmit = (values) => {
+    const { register } = this.props;
     const finalValues = JSON.parse(JSON.stringify(values));
     Object.keys(finalValues).map((key) => {
       if (key !== 'confirmPassword' && key !== 'password') {
@@ -35,18 +49,7 @@ class Register extends Component {
     });
     delete finalValues.confirmPassword;
 
-    // const url = `${utils.apiUrl}/auth/signup`;
-    const url = 'http://localhost:4000/auth/signup'
-    axios
-      .post(url, finalValues)
-      .then((res) => {
-        if (res) {
-          this.handleAlert('Register successfully!', false);
-        }
-      })
-      // .catch((err) => {
-      //   this.handleAlert(err.response.data.message);
-      // });
+    register(values);
   };
 
   handleAlert = (content, isError = true) => {
@@ -78,9 +81,14 @@ class Register extends Component {
         {/* Start Page Wrapper  */}
         <main className="page-wrapper">
           {/* Start Portfolio Area  */}
-          <div className="creative-portfolio-wrapper ptb--120 register-container">
-            {/* {isLoading && <Loading />} */}
-            <div className="container p--35 bg-white screen-sm">
+          <div
+            className={`creative-portfolio-wrapper ptb--120 register-container ${
+              isLoading ? 'disabled' : ''
+            } `}
+          >
+            <div className="container p--35 bg-white screen-sm position-relative">
+              {isLoading && <Loading className="center-loading" />}
+
               <div className="form-container">
                 <div className="title text-center">
                   <h3 className="active">Registration Form</h3>
@@ -235,10 +243,24 @@ class Register extends Component {
           style={{ width: '400px' }}
         />
 
-        <Footer isLoading={isLoading} />
+        <Footer isLoading={false} />
       </div>
     );
   }
 }
 
-export default Register;
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.authReducer.isLoading,
+    registerData: state.authReducer.registerData,
+    registerError: state.authReducer.registerError,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    register: (values) => dispatch(register(values)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

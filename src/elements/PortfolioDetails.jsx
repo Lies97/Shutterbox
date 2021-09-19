@@ -15,7 +15,8 @@ import Loading from '../component/common/Loading';
 
 import { FiCheck } from 'react-icons/fi';
 import { connect } from 'react-redux';
-import { fetchNews } from '../redux/actions/fetch-news';
+// import { fetchNews } from '../redux/actions/news/fetch-news'
+
 const SocialShare = [
   { Social: <FaFacebookF />, link: 'https://www.facebook.com/' },
   { Social: <FaLinkedinIn />, link: 'https://www.linkedin.com/' },
@@ -34,7 +35,7 @@ class PortfolioDetails extends Component {
     this.openModal = this.openModal.bind(this);
   }
   componentDidMount() {
-    this.props.fetchNews();
+    // this.props.fetchNews();
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -295,7 +296,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchNews: () => dispatch(fetchNews()),
+    // fetchNews: () => dispatch(fetchNews()),
   };
 };
 

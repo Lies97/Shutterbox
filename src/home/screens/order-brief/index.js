@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import emailjs from 'emailjs-com';
 
 import Loading from '../../../component/common/Loading';
-import { fetchNews } from '../../../redux/actions/fetch-news';
+import { fetchNews } from '../../../redux/actions/news/fetch-news'
 import Animate from '@charlesvien/react-animatecss';
 import Product from './components/Product';
 import Content from './components/Content';
@@ -213,7 +213,7 @@ class OrderBrief extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchNews();
+    // this.props.fetchNews();
   }
 
   handleStep = (type, index) => {
@@ -1114,7 +1114,7 @@ class OrderBrief extends Component {
 const mapStateToProps = (state) => {
   return {
     isLoading: state.homeReducer.isLoading,
-    news: state.homeReducer.news,
+    news: state.newsReducer.news,
   };
 };
 

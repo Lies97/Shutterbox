@@ -8,7 +8,7 @@ import './style.scss';
 import Footer from '../../../component/footer/FooterTwo';
 import { connect } from 'react-redux';
 import Loading from '../../../component/common/Loading';
-import { fetchNews } from '../../../redux/actions/fetch-news';
+import { fetchNews } from '../../../redux/actions/news/fetch-news';
 import Animate from '@charlesvien/react-animatecss';
 
 class Product extends Component {
@@ -77,7 +77,7 @@ class Product extends Component {
 const mapStateToProps = (state) => {
   return {
     isLoading: state.homeReducer.isLoading,
-    news: state.homeReducer.news,
+    news: state.newsReducer.news,
   };
 };
 

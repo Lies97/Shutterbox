@@ -2,14 +2,16 @@ import {
   GET_NEWS,
   GET_NEWS_FAILURE,
   GET_NEWS_SUCCESS,
-} from '../actions/types/fetch-news.js';
+} from '../types/news/fetch-news';
 
 import {
   GET_GALLERIES,
   GET_GALLERIES_SUCCESS,
   GET_GALLERIES_FAILURE,
-} from '../actions/types/fetch-galleries.js';
-import { SET_LOADING } from '../actions/types/set-loading.js';
+} from '../types/fetch-galleries'
+
+import { SET_LOADING } from '../types/set-loading';
+
 const INITIAL_STATE = {
   isLoading: null,
   news: [],

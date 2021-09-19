@@ -17,11 +17,10 @@ import BlogContent from '../elements/blog/BlogContent';
 import BrandTwo from '../elements/BrandTwo';
 import Helmet from '../component/common/Helmet';
 import { connect } from 'react-redux';
-import { fetchNews } from '../redux/actions/fetch-news';
 
 class MainDemo extends Component {
   componentDidMount() {
-    this.props.fetchNews();
+    // this.props.fetchNews();
   }
   render() {
     const { isLoading } = this.props;
@@ -203,7 +202,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchNews: () => dispatch(fetchNews()),
+    // fetchNews: () => dispatch(fetchNews()),
   };
 };
 
