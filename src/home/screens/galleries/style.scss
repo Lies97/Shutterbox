@@ -1,0 +1,26 @@
+.thumbnail-images {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+}
+
+input.search-input:active {
+  border-color: #6c757d !important;
+}
+
+.galleries-wrapper {
+  > span {
+    > span {
+      > span {
+        &:hover {
+          color: var(--color-primary);
+          cursor: pointer;
+        }
+        > span:hover {
+          color: var(--color-primary);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

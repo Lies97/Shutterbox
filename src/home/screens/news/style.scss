@@ -1,0 +1,25 @@
+.thumbnail-images {
+  width: 100%;
+  height: 300px !important;
+  object-fit: cover;
+}
+
+.post-image {
+  object-fit: contain;
+  height: 500px;
+}
+
+.delete-icon-inside {
+  top: 6px;
+  right: 8px;
+  z-index: 9999;
+  color: #fff !important;
+  display: none !important;
+  cursor: pointer;
+}
+
+.portfolio-wrapper:hover {
+  .delete-icon-inside {
+    display: inline-block !important;
+  }
+}

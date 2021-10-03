@@ -1,0 +1,195 @@
+.active-tab {
+  background: #ea5669;
+}
+.item {
+  color: #000;
+  background: #dfdfdf;
+  padding: 8px 16px;
+  &:hover {
+    background: #ea5669;
+    color: #fff;
+    transition: 0.2s all;
+  }
+}
+.active-item {
+  color: #fff;
+  background: #ea5669;
+}
+.order-brief-container {
+  background: #e5e5e5;
+
+  .font-zone {
+    .font-tab {
+      border: 2px solid rgba(0, 0, 0, 0.2);
+    }
+    li {
+      list-style: none;
+      border-radius: 8px;
+    }
+    .active-tab {
+      background: #ea5669;
+      > h5 {
+        color: #fff;
+      }
+    }
+  }
+
+  .summary-card {
+    min-height: 630px;
+    min-width: 340px;
+    padding: 16px;
+    border-radius: 8px;
+    border: 2px solid #757575;
+    .title {
+      color: var(--color-primary);
+      border-bottom: 2px solid var(--color-primary);
+    }
+    .body {
+      border-bottom: 2px solid #000;
+      .title-wrapper {
+        span {
+          border: 2px solid var(--color-primary);
+          color: var(--color-primary);
+          border-radius: 8px;
+        }
+      }
+    }
+  }
+  .tablist-inner {
+    .react-tabs__tab--selected {
+      color: var(--color-primary);
+      border-bottom: 2px solid var(--color-primary);
+      background: 0;
+      border-radius: 0;
+      pointer-events: none;
+    }
+    .pv-tab-button {
+      border: 0;
+      li {
+        margin: 0;
+        transition: unset;
+      }
+    }
+  }
+
+  .order-brief {
+    background: #fff;
+  }
+
+  .product {
+    .label {
+      color: #000;
+      font-weight: 600;
+    }
+    .product-type {
+      .card-container {
+        background: #dfdfdf;
+        border-radius: 12px;
+        .icons {
+          width: 60px;
+          height: 60px;
+          color: #fff;
+        }
+        &:hover {
+          background: #ea5669;
+          transition: background-color 0.5s;
+        }
+        .card-body {
+          h5 {
+            color: #fff;
+            font-size: 14px;
+          }
+        }
+      }
+      .active-tab {
+        background: #ea5669 !important;
+      }
+      .item {
+        color: #000;
+        background: #dfdfdf;
+        padding: 8px 16px;
+        &:hover {
+          background: #ea5669;
+          color: #fff;
+          transition: 0.2s all;
+        }
+      }
+      .active-item {
+        color: #fff;
+        background: #ea5669;
+      }
+    }
+  }
+}
+
+// .css-9gakcf-option {
+//   background-color: #757575 !important;
+// }
+
+// .css-yk16xz-control {
+//   height: 38px;
+// }
+
+// .react-select__single-value,
+// .react-select__multi-value,
+// .react-select__placeholder {
+//   height: 38px;
+// }
+
+// .react-select__indicator-separator {
+//   height: 20px;
+// }
+
+// .css-b8ldur-Input {
+//   margin: 0px !important;
+//   padding-bottom: 5px !important;
+//   padding-top: 0px !important;
+//   height: 38px !important;
+//   .react-select__input {
+//     input {
+//       height: 32px !important;
+//     }
+//   }
+// }
+
+// .react-select__dropdown-indicator {
+//   padding-top: 0 !important;
+// }
+
+// .react-select__menu {
+//   margin-top: 0 !important;
+//   .react-select__menu-list {
+//     .react-select__option {
+//       height: 38px !important;
+//     }
+//   }
+// }
+
+// .css-1pahdxg-control {
+//   border-color: #757575 !important;
+//   box-shadow: 0 0 0 1px #757575 !important;
+//   // height: 38px;
+//   :hover {
+//     border-color: #757575 !important;
+//   }
+// }
+
+.attachment-zone {
+  .delete-wrapper {
+    &:hover {
+      color: var(--color-primary);
+      transition: all 0.2s;
+    }
+  }
+}
+
+.total-wrapper {
+  margin-top: 20px;
+  padding: 48px;
+  border: 1px solid #DFDFDF;
+  border-radius: 4px;
+  background: #DFDFDF;
+  .total-number {
+    border-bottom: 2px solid #000;
+  }
+}
