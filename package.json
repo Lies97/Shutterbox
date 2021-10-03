@@ -111,8 +111,8 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "start:dev": "set REACT_APP_STAGE=development && node scripts/start.js",
-    "start:prod": "set REACT_APP_STAGE=production && node scripts/start.js",
+    "start:dev": "set REACT_APP_STAGE=development && node scripts/start.js" ,
+    "start:prod": "set REACT_APP_STAGE=production && node scripts/start.js" ,
     "build": "set REACT_APP_STAGE=production && node scripts/build.js",
     "build:prod": "set REACT_APP_STAGE=production && node scripts/build.js",
     "test": "node scripts/test.js"

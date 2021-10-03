@@ -8,7 +8,7 @@ const PortfolioList = [
     {
         image: Portfolio_image,
         category: 'Development',
-        title: 'Web Desigaaan',
+        title: 'Web Desigan',
         description: 'Lorem ipsum dolor sit amet, conse ctetur adipiscing elit.'
     },
     {
