@@ -8,19 +8,51 @@ import {
   GET_NEWS_BY_ID_SUCCESS,
 } from '../../types/news/fetch-news';
 import utils from '../../../helper';
+import { JsonApi } from '../../../helper/json-api.ts';
+import { SingleNews } from '../../../models/single-news.ts';
 
 const { apiUrl, localUrl } = utils;
 
-const url = process.env.REACT_APP_STAGE.includes('development') ? `${localUrl}/posts` : `${apiUrl}/posts`;
+const includedRelationships = ['author', 'category'];
+const includedCategory = ['category'];
+const url = process.env.REACT_APP_STAGE.includes('development')
+  ? `${localUrl}/posts`
+  : `${apiUrl}/posts`;
 
-export const fetchNews = () => {
+// const url = process.env.REACT_APP_STAGE.includes('development')
+//   ? `${localUrl}/api/posts?include=${includedRelationships}`
+//   : `${apiUrl}/api/posts?include=${includedRelationships}`;
+
+export const fetchNews = (categoryId = 0) => {
+  console.log(categoryId);
+  const filter = categoryId ? `&filter[category.id][eq]=${categoryId}` : '';
+
+  const url = process.env.REACT_APP_STAGE.includes('development')
+    ? `${localUrl}/api/posts?include=${includedCategory}${filter}`
+    : `${apiUrl}/api/posts?include=${includedCategory}${filter}`;
+
   return (dispatch) => {
     dispatch({ type: GET_NEWS });
     return axios
       .get(url)
-      .then((payload) =>
-        dispatch({ type: GET_NEWS_SUCCESS, payload: payload.data })
-      )
+      .then((payload) => {
+        const posts = payload.data.data.map((post, i) => {
+          return JsonApi.parseJsonApi(
+            SingleNews,
+            post,
+            payload.data.included
+          );
+        });
+        // const posts = JsonApi.parseJsonApi(
+        //   SingleNews,
+        //   payload.data.data,
+        //   payload.data.included
+        // );
+        return dispatch({
+          type: GET_NEWS_SUCCESS,
+          payload: posts,
+        });
+      })
       .catch((err) => {
         if (err.response) {
           dispatch({
@@ -33,19 +65,30 @@ export const fetchNews = () => {
 };
 
 export const fetchNewsById = (id) => {
+  const url = process.env.REACT_APP_STAGE.includes('development')
+    ? `${localUrl}/api/posts/${id}?include=${includedRelationships}`
+    : `${apiUrl}/api/posts/${id}?include=${includedRelationships}`;
+
   return (dispatch) => {
     dispatch({ type: GET_NEWS_BY_ID });
     return axios
-      .get(`${url}/${id}`)
-      .then((payload) =>
-        dispatch({
+      .get(`${url}`)
+      .then((payload) => {
+        const singleNews = JsonApi.parseJsonApi(
+          SingleNews,
+          payload.data.data,
+          payload.data.included
+        );
+        delete singleNews.author.password;
+        console.log('singleNews', singleNews);
+        return dispatch({
           type: GET_NEWS_BY_ID_SUCCESS,
           payload: {
-            ...payload.data,
-            section: JSON.parse(payload.data.section),
+            ...singleNews,
+            section: JSON.parse(singleNews.section),
           },
-        })
-      )
+        });
+      })
       .catch((err) => {
         if (err.response) {
           dispatch({

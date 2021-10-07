@@ -91,9 +91,9 @@ class PostDetails extends Component {
                     <ul className="blog-meta d-flex justify-content-center align-items-center">
                       <li className="d-flex align-items-center">
                         <FiClock />
-                        {singleNewsData.createdAt && (
+                        {singleNewsData.created_at && (
                           <Moment format="MMMM D, YYYY">
-                            {singleNewsData.createdAt}
+                            {singleNewsData.created_at}
                           </Moment>
                         )}
 
@@ -101,7 +101,7 @@ class PostDetails extends Component {
                       </li>
                       <li className="d-flex align-items-center">
                         <FiUser />
-                        {singleNewsData.author}
+                        {singleNewsData.author && `${singleNewsData.author.first_name} ${singleNewsData.author.last_name}`}
                       </li>
                     </ul>
                   </div>
@@ -121,7 +121,7 @@ class PostDetails extends Component {
                       <p>{singleNewsData.description}</p>
                       <div className="thumbnail">
                         <img
-                          src={singleNewsData.imgForDetailPost}
+                          src={singleNewsData.img_for_detail_post}
                           alt="Blog Images"
                           className="post-image"
                         />

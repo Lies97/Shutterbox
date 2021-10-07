@@ -6,9 +6,11 @@ import {
 } from '../../types/news/create-news';
 import utils from '../../../helper';
 
-const { apiUrl, localUrl } = utils;
+const { apiUrl, localUrl, getSessionStorage } = utils;
 
-const url = process.env.REACT_APP_STAGE.includes('development') ? `${localUrl}/posts` : `${apiUrl}/posts`;
+const url = process.env.REACT_APP_STAGE.includes('development')
+  ? `${localUrl}/posts`
+  : `${apiUrl}/posts`;
 
 export const createNews = (values) => {
   return (dispatch) => {
@@ -17,7 +19,10 @@ export const createNews = (values) => {
       method: 'post',
       url,
       data: values,
-      headers: { 'Content-Type': 'multipart/form-data' },
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${getSessionStorage('user').access_token}`,
+      },
     })
       .then((payload) =>
         dispatch({ type: CREATE_NEWS_SUCCESS, payload: payload.data })

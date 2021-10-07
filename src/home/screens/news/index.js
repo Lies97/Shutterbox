@@ -7,6 +7,7 @@ import Header from '../../../component/header/Header';
 import Footer from '../../../component/footer/FooterTwo';
 import { connect } from 'react-redux';
 import { fetchNews } from '../../../redux/actions/news/fetch-news';
+import { getNewsCategory } from '../../../redux/actions/news/get-news-category';
 import { deleteNews } from '../../../redux/actions/news/delete-news';
 import 'react-image-lightbox/style.css';
 import Loading from '../../../component/common/Loading';
@@ -15,6 +16,7 @@ import './style.scss';
 import { Link } from 'react-router-dom';
 import utils from '../../../helper';
 import Modal from 'react-modal';
+import FilterBar from './components/FitlerBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -42,12 +44,19 @@ class News extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchNews();
+    const { getNewsCategory, fetchNews } = this.props;
+    fetchNews();
+    getNewsCategory();
   }
 
   componentWillReceiveProps(nextProps) {
-    const { deleteNewsData, deleteNewsError, createNewsData, fetchNews } = this.props;
-    const { deleteNewsData: nextDeleteNewsData, deleteNewsError: nextDeleteNewsError, createNewsData: nextCreateNewsData } = nextProps;
+    const { deleteNewsData, deleteNewsError, createNewsData, fetchNews } =
+      this.props;
+    const {
+      deleteNewsData: nextDeleteNewsData,
+      deleteNewsError: nextDeleteNewsError,
+      createNewsData: nextCreateNewsData,
+    } = nextProps;
 
     if (nextDeleteNewsData && deleteNewsData !== nextDeleteNewsData) {
       fetchNews();
@@ -56,7 +65,7 @@ class News extends Component {
     } else if (nextDeleteNewsError && deleteNewsError !== nextDeleteNewsError) {
       this.handleAlert(nextDeleteNewsError);
     }
-    
+
     if (nextCreateNewsData && createNewsData !== nextCreateNewsData) {
       this.handleAlert('Created Post Successfully!', false);
     }
@@ -101,8 +110,13 @@ class News extends Component {
       : toast.success(content, { theme: 'colored' });
   };
 
+  getCategoryId = (categoryId) => {
+    const { fetchNews } = this.props;
+    fetchNews(categoryId);
+  };
+
   render() {
-    const { isLoading, news, deleteLoading } = this.props;
+    const { isLoading, news, deleteLoading, newsCategory } = this.props;
 
     const isAuthorized = utils.getSessionStorage('user');
 
@@ -131,6 +145,13 @@ class News extends Component {
             {isAuthorized &&
               isAuthorized.role === 'super_admin' &&
               this.renderActionBar()}
+
+            {newsCategory && (
+              <FilterBar
+                category={newsCategory}
+                getCategoryId={this.getCategoryId}
+              />
+            )}
             {!isLoading && news && (
               <div className="container plr--10 ptb--50">
                 <div className="row row--5">
@@ -160,7 +181,7 @@ class News extends Component {
                           <div className="thumbnail">
                             <Link to={`/news/${data.id}`}>
                               <img
-                                src={data.imgForDetailPost}
+                                src={data.img_for_detail_post}
                                 alt="Portfolio Images"
                                 className="text-center thumbnail-images"
                               />
@@ -250,12 +271,14 @@ const mapStateToProps = (state) => {
     deleteNewsData: state.newsReducer.deleteNewsData,
     deleteNewsError: state.newsReducer.deleteNewsData,
     createNewsData: state.newsReducer.createNewsData,
+    newsCategory: state.newsReducer.newsCategory,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchNews: () => dispatch(fetchNews()),
+    fetchNews: (categoryId) => dispatch(fetchNews(categoryId)),
+    getNewsCategory: () => dispatch(getNewsCategory()),
     deleteNews: (id) => dispatch(deleteNews(id)),
   };
 };
